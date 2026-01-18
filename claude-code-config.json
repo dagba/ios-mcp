@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "ios-dev": {
+      "command": "node",
+      "args": [
+        "/Users/d/Documents/projects/ios-dev-mcp-server/build/index.js"
+      ],
+      "metadata": {
+        "name": "iOS Development MCP Server",
+        "description": "Comprehensive iOS simulator control and Swift/Xcode development tools",
+        "version": "0.1.0",
+        "author": "iOS Dev MCP",
+        "homepage": "https://github.com/yourusername/ios-dev-mcp-server"
+      }
+    }
+  }
+}

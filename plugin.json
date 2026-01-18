@@ -1,0 +1,198 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/plugin-schema.json",
+  "name": "ios-dev",
+  "displayName": "iOS Development Tools",
+  "version": "0.4.0",
+  "description": "Comprehensive iOS simulator control and Swift/Xcode development tools for Claude Code",
+  "publisher": "ios-dev-tools",
+  "homepage": "https://github.com/dagba/ios-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dagba/ios-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dagba/ios-mcp/issues"
+  },
+  "license": "MIT",
+  "categories": [
+    "Development Tools",
+    "Testing",
+    "Mobile Development"
+  ],
+  "keywords": [
+    "ios",
+    "simulator",
+    "xcode",
+    "swift",
+    "mobile",
+    "testing",
+    "development",
+    "apple",
+    "macos"
+  ],
+  "icon": "assets/icon.png",
+  "screenshots": [
+    "assets/screenshot-1.png",
+    "assets/screenshot-2.png"
+  ],
+  "author": {
+    "name": "iOS Dev Tools Team"
+  },
+  "engines": {
+    "claude-code": "^0.1.0",
+    "node": ">=18.0.0"
+  },
+  "os": ["darwin"],
+  "cpu": ["x64", "arm64"],
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc && chmod +x build/index.js",
+    "test": "vitest",
+    "prepublish": "npm run build"
+  },
+  "mcp": {
+    "server": {
+      "command": "node",
+      "args": ["${extensionPath}/build/index.js"],
+      "type": "stdio"
+    }
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false
+  },
+  "tools": [
+    {
+      "name": "simulator_list_devices",
+      "description": "List all available iOS simulator devices",
+      "category": "Device Management"
+    },
+    {
+      "name": "simulator_boot",
+      "description": "Boot an iOS simulator device",
+      "category": "Device Management"
+    },
+    {
+      "name": "simulator_shutdown",
+      "description": "Shutdown a running iOS simulator",
+      "category": "Device Management"
+    },
+    {
+      "name": "simulator_get_info",
+      "description": "Get detailed information about a simulator device",
+      "category": "Device Management"
+    },
+    {
+      "name": "simulator_screenshot",
+      "description": "Capture and compress screenshots from iOS simulator",
+      "category": "UI Interaction"
+    },
+    {
+      "name": "simulator_tap",
+      "description": "Tap at specific coordinates on the simulator screen",
+      "category": "UI Interaction"
+    },
+    {
+      "name": "simulator_swipe",
+      "description": "Perform swipe gestures on the simulator",
+      "category": "UI Interaction"
+    },
+    {
+      "name": "simulator_long_press",
+      "description": "Perform long press at specific coordinates",
+      "category": "UI Interaction"
+    },
+    {
+      "name": "simulator_launch_app",
+      "description": "Launch an iOS app by bundle identifier",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_terminate_app",
+      "description": "Terminate a running app",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_install_app",
+      "description": "Install an app from .app bundle",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_uninstall_app",
+      "description": "Uninstall an app by bundle identifier",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_open_url",
+      "description": "Open a URL or deep link on the simulator",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_get_logs",
+      "description": "Get recent log entries from the simulator",
+      "category": "App Management"
+    },
+    {
+      "name": "simulator_type_text",
+      "description": "Type text into focused text field",
+      "category": "Input Simulation"
+    },
+    {
+      "name": "simulator_press_home",
+      "description": "Press the home button",
+      "category": "Input Simulation"
+    },
+    {
+      "name": "simulator_send_keys",
+      "description": "Send hardware keyboard input and shortcuts",
+      "category": "Input Simulation"
+    }
+  ],
+  "readme": "README.md",
+  "changelog": "CHANGELOG.md",
+  "contributes": {
+    "configuration": {
+      "title": "iOS Development Tools",
+      "properties": {
+        "ios-dev.autoBootSimulator": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically boot a simulator when needed"
+        },
+        "ios-dev.defaultSimulator": {
+          "type": "string",
+          "default": "booted",
+          "description": "Default simulator to use (UDID or 'booted')"
+        },
+        "ios-dev.screenshotQuality": {
+          "type": "number",
+          "default": 80,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Default JPEG quality for screenshots (1-100)"
+        }
+      }
+    }
+  },
+  "activationEvents": [
+    "onStartup"
+  ],
+  "extensionDependencies": [],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "execa": "^9.6.1",
+    "sharp": "^0.34.5",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  }
+}
