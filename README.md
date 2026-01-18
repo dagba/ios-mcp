@@ -108,32 +108,6 @@ Enable Claude AI to autonomously control iOS simulators, test applications, debu
 - Archive & export for distribution
 - Performance profiling with Instruments
 
-### Tested & Verified
-
-All MCP tools have been tested end-to-end with a real iOS app (HelloWorldiOS). Test results:
-
-**✅ All 11 idb-dependent tools working:**
-- `simulator_tap` - Tapped "Say Hello" button successfully
-- `simulator_swipe` - Executed left swipe gesture (200px)
-- `simulator_describe_ui` - Retrieved full accessibility tree (5 elements)
-- `simulator_input_text` - Typed "MCP Test" into text field
-- `simulator_press_button` - Locked/unlocked device with LOCK button
-
-**✅ All 12 non-idb tools working:**
-- `simulator_screenshot`, `simulator_list_devices`, `simulator_boot`, `simulator_shutdown`
-- `simulator_get_info`, `simulator_launch_app`, `simulator_terminate_app`
-- `simulator_install_app`, `simulator_uninstall_app`, `simulator_open_url`
-- `simulator_get_logs`, `simulator_type_text`, `simulator_press_home`, `simulator_send_keys`
-
-**✅ Build & Test tools:**
-- `xcodebuild_build`, `xcodebuild_clean`, `xcodebuild_test`
-
-**Test Environment:**
-- macOS with Xcode 26
-- iPhone 17 Simulator (iOS 26.0)
-- HelloWorldiOS app (SwiftUI)
-- fb-idb 1.1.7 + idb_companion 1.1.8
-
 ## Installation
 
 ### Prerequisites
