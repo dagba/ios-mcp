@@ -81,7 +81,7 @@ describe('Validation Utilities', () => {
       } as any);
 
       await expect(validateSimulatorState('INVALID-UDID'))
-        .rejects.toThrow('Invalid UDID');
+        .rejects.toThrow('Device not found');
     });
 
     test('throws SIMULATOR_NOT_BOOTED when simulator is shutdown', async () => {
@@ -93,7 +93,7 @@ describe('Validation Utilities', () => {
       } as any);
 
       await expect(validateSimulatorState('ABCD-1234'))
-        .rejects.toThrow('Boot simulator first');
+        .rejects.toThrow('Simulator is not booted');
     });
   });
 
@@ -139,7 +139,7 @@ describe('Validation Utilities', () => {
       } as any);
 
       await expect(validateInstrumentsSetup('INVALID-UDID'))
-        .rejects.toThrow('Invalid UDID');
+        .rejects.toThrow('Device not found');
     });
 
     test('throws when simulator is not booted', async () => {
@@ -158,7 +158,7 @@ describe('Validation Utilities', () => {
       } as any);
 
       await expect(validateInstrumentsSetup('ABCD-1234'))
-        .rejects.toThrow('Boot simulator first');
+        .rejects.toThrow('Simulator is not booted');
     });
   });
 });

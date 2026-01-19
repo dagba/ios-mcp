@@ -3,6 +3,7 @@
  */
 
 import { execa } from 'execa';
+import { SimulatorError, ValidationError } from './errors.js';
 
 /**
  * Check if xctrace command is available
@@ -30,7 +31,7 @@ export async function checkLeaksAvailable(): Promise<boolean> {
 
 /**
  * Validate that simulator exists and is booted
- * @throws Error with recovery message if validation fails
+ * @throws SimulatorError with recovery message if validation fails
  */
 export async function validateSimulatorState(udid: string): Promise<void> {
   try {
@@ -39,38 +40,45 @@ export async function validateSimulatorState(udid: string): Promise<void> {
 
     // Check if UDID exists in output
     if (!output.includes(udid)) {
-      throw new Error(
-        `Invalid UDID. List simulators: \`xcrun simctl list devices\``
-      );
+      throw new SimulatorError('Device not found', {
+        code: 'SIMULATOR_NOT_FOUND',
+        details: { udid },
+        recovery: 'List simulators: `xcrun simctl list devices`'
+      });
     }
 
     // Check if simulator is booted
     const udidLine = output.split('\n').find(line => line.includes(udid));
     if (!udidLine || !udidLine.includes('(Booted)')) {
-      throw new Error(
-        `Boot simulator first: \`xcrun simctl boot ${udid}\``
-      );
+      throw new SimulatorError('Simulator is not booted', {
+        code: 'SIMULATOR_NOT_BOOTED',
+        details: { udid, state: 'Shutdown' },
+        recovery: `Boot simulator first: \`xcrun simctl boot ${udid}\``
+      });
     }
   } catch (error) {
-    if (error instanceof Error && error.message.includes('simctl')) {
+    if (error instanceof SimulatorError) {
       throw error;
     }
-    throw new Error(
-      `Invalid UDID. List simulators: \`xcrun simctl list devices\``
-    );
+    throw new SimulatorError('Device not found', {
+      code: 'SIMULATOR_NOT_FOUND',
+      details: { udid },
+      recovery: 'List simulators: `xcrun simctl list devices`'
+    });
   }
 }
 
 /**
  * Combined pre-flight validation for starting profiling
- * @throws Error with recovery message if any check fails
+ * @throws ValidationError or SimulatorError with recovery message if any check fails
  */
 export async function validateInstrumentsSetup(udid: string): Promise<void> {
   // Check xctrace availability
   const hasXCTrace = await checkXCTraceAvailable();
   if (!hasXCTrace) {
-    throw new Error(
-      'Install Xcode Command Line Tools: `xcode-select --install`'
+    throw new ValidationError(
+      'xctrace command not found. Install Xcode Command Line Tools: `xcode-select --install`',
+      'xctrace'
     );
   }
 
