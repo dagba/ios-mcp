@@ -25,6 +25,7 @@ import { registerEnvironmentTools } from './tools/environment/index.js';
 import { registerLocationTools } from './tools/location/index.js';
 import { registerMediaTools } from './tools/media/index.js';
 import { registerUtilityTools } from './tools/utilities/index.js';
+import { registerInstrumentsTools } from './tools/instruments/index.js';
 // import { registerProjectTools } from './tools/project/index.js';
 // import { registerSPMTools } from './tools/spm/index.js';
 
@@ -34,7 +35,7 @@ import { registerUtilityTools } from './tools/utilities/index.js';
 const server = new Server(
   {
     name: 'ios-dev-mcp-server',
-    version: '0.1.0'
+    version: '0.5.0'
   },
   {
     capabilities: {
@@ -65,6 +66,7 @@ function registerAllTools(): void {
   registerLocationTools(toolRegistry);
   registerMediaTools(toolRegistry);
   registerUtilityTools(toolRegistry);
+  registerInstrumentsTools(toolRegistry);
   // registerProjectTools(toolRegistry);
   // registerSPMTools(toolRegistry);
 
