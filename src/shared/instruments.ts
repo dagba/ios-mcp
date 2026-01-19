@@ -273,7 +273,7 @@ export interface SessionInfo {
   status: 'recording' | 'stopped' | 'failed';
   start_time: Date;
   end_time?: Date;
-  child_process?: any; // ChildProcess from execa, type as any to avoid import
+  child_process?: import('execa').ResultPromise;
 }
 
 /**
@@ -283,7 +283,8 @@ export interface StopResult {
   session_id: string;
   trace_path: string;
   duration_seconds: number;
-  status: 'stopped' | 'failed';
+  file_size_mb: number;
+  status: 'completed';
 }
 
 /**
