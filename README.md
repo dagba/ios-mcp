@@ -18,6 +18,25 @@ A comprehensive Model Context Protocol (MCP) server providing iOS simulator cont
 
 Enable Claude AI to autonomously control iOS simulators, test applications, debug issues, and analyze app behavior through natural language commands. Claude can write code, build projects, run them in the simulator, execute UI tests, read crash logs, iterate on fixes, and verify everything works - all without manual debugging.
 
+This repository provides **two complementary capabilities**:
+
+1. **MCP Tools (23 tools)** - Direct iOS simulator control and Xcode integration:
+   - Device management (boot, shutdown, device info)
+   - UI interaction (tap, swipe, screenshot, UI inspection)
+   - App lifecycle (install, launch, terminate, uninstall)
+   - Debugging (crash logs, real-time log streaming, text input)
+   - Environment control (status bar, appearance, permissions, push notifications)
+   - Build & test (xcodebuild integration with error parsing and test results)
+
+2. **Claude Code Skills (11 workflows)** - Curated development patterns that orchestrate the tools:
+   - **Swift & Concurrency (2):** Swift 6.2+ concurrency fixes, async/await expertise
+   - **iOS Development (3):** Debugger agent, App Store release notes, GitHub issue resolution
+   - **SwiftUI (4):** UI patterns, view refactoring, performance auditing, Liquid Glass (iOS 26)
+   - **macOS Packaging (1):** SwiftPM-based app distribution without Xcode
+   - **Plus 21 official Apple documentation files** from Xcode 26 integrated into skills
+
+**Skills work WITH tools** - for example, the `ios-debugger-agent` skill orchestrates `simulator_boot`, `simulator_install_app`, `simulator_launch_app`, `simulator_screenshot`, `simulator_tap`, and `simulator_get_logs` into a complete debugging workflow. You get both the **capabilities** (tools) and the **discipline** (skills) for professional iOS development.
+
 ## Table of Contents
 
 - [Status](#status)
