@@ -329,6 +329,17 @@ export class TraceSessionManager {
   }
 
   /**
+   * Update an existing session with new data
+   */
+  updateSession(sessionId: string, updates: Partial<SessionInfo>): void {
+    const existing = this.sessions.get(sessionId);
+    if (!existing) {
+      throw new Error(`Session ${sessionId} not found`);
+    }
+    this.sessions.set(sessionId, { ...existing, ...updates });
+  }
+
+  /**
    * Check if session exists
    */
   hasSession(sessionId: string): boolean {

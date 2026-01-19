@@ -244,4 +244,92 @@ describe('TraceSessionManager', () => {
     expect(manager.getSessionCount()).toBe(0);
     expect(manager.getAllSessions()).toHaveLength(0);
   });
+
+  describe('ChildProcess management', () => {
+    test('stores and retrieves child process reference', () => {
+      const mockProcess = { pid: 12345, kill: vi.fn() } as any;
+
+      const sessionInfo: SessionInfo = {
+        session_id: 'test-session-cp',
+        device_udid: 'ABCD-1234',
+        bundle_id: 'com.example.App',
+        templates: ['time'],
+        trace_path: '/tmp/test.trace',
+        pid: 12345,
+        status: 'recording',
+        start_time: new Date(),
+        child_process: mockProcess,
+      };
+
+      manager.registerSession(sessionInfo);
+      const retrieved = manager.getSession('test-session-cp');
+
+      expect(retrieved?.child_process).toBe(mockProcess);
+      expect(retrieved?.child_process?.pid).toBe(12345);
+    });
+
+    test('updates session to remove child process on stop', () => {
+      const mockProcess = { pid: 12345, kill: vi.fn() } as any;
+
+      const sessionInfo: SessionInfo = {
+        session_id: 'test-session-stop',
+        device_udid: 'ABCD-1234',
+        bundle_id: 'com.example.App',
+        templates: ['time'],
+        trace_path: '/tmp/test.trace',
+        pid: 12345,
+        status: 'recording',
+        start_time: new Date(),
+        child_process: mockProcess,
+      };
+
+      manager.registerSession(sessionInfo);
+
+      // Update to stopped state
+      const updatedInfo: SessionInfo = {
+        ...sessionInfo,
+        status: 'stopped',
+        end_time: new Date(),
+        child_process: undefined,
+      };
+
+      manager.registerSession(updatedInfo);
+      const retrieved = manager.getSession('test-session-stop');
+
+      expect(retrieved?.status).toBe('stopped');
+      expect(retrieved?.child_process).toBeUndefined();
+      expect(retrieved?.end_time).toBeDefined();
+    });
+
+    test('updateSession modifies existing session', () => {
+      const sessionInfo: SessionInfo = {
+        session_id: 'test-update',
+        device_udid: 'ABCD-1234',
+        bundle_id: 'com.example.App',
+        templates: ['time'],
+        trace_path: '/tmp/test.trace',
+        pid: 12345,
+        status: 'recording',
+        start_time: new Date(),
+      };
+
+      manager.registerSession(sessionInfo);
+
+      manager.updateSession('test-update', {
+        status: 'stopped',
+        end_time: new Date(),
+      });
+
+      const updated = manager.getSession('test-update');
+      expect(updated?.status).toBe('stopped');
+      expect(updated?.end_time).toBeDefined();
+      expect(updated?.device_udid).toBe('ABCD-1234'); // Other fields preserved
+    });
+
+    test('updateSession throws when session does not exist', () => {
+      expect(() => {
+        manager.updateSession('nonexistent', { status: 'stopped' });
+      }).toThrow('Session nonexistent not found');
+    });
+  });
 });
