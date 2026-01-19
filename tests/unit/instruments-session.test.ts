@@ -27,9 +27,13 @@ describe('TraceSessionManager', () => {
   test('registers session on start', () => {
     const sessionInfo: SessionInfo = {
       session_id: 'test-session-1',
+      device_udid: 'ABCD-1234',
+      bundle_id: 'com.example.TestApp',
+      templates: ['time', 'allocations'],
       trace_path: '/tmp/instruments-traces/test-session-1/recording.trace',
       pid: 12345,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     };
 
     manager.registerSession(sessionInfo);
@@ -43,16 +47,24 @@ describe('TraceSessionManager', () => {
   test('tracks multiple concurrent sessions', () => {
     const session1: SessionInfo = {
       session_id: 'session-1',
+      device_udid: 'DEVICE-1',
+      bundle_id: 'com.app1',
+      templates: ['time'],
       trace_path: '/tmp/trace1.trace',
       pid: 12345,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     };
 
     const session2: SessionInfo = {
       session_id: 'session-2',
+      device_udid: 'DEVICE-2',
+      bundle_id: 'com.app2',
+      templates: ['allocations'],
       trace_path: '/tmp/trace2.trace',
       pid: 12346,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     };
 
     manager.registerSession(session1);
@@ -66,9 +78,13 @@ describe('TraceSessionManager', () => {
   test('retrieves session by ID', () => {
     const sessionInfo: SessionInfo = {
       session_id: 'retrieve-test',
+      device_udid: 'RETRIEVE-DEVICE',
+      bundle_id: 'com.retrieve.app',
+      templates: ['leaks'],
       trace_path: '/tmp/trace.trace',
       pid: 99999,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     };
 
     manager.registerSession(sessionInfo);
@@ -88,16 +104,24 @@ describe('TraceSessionManager', () => {
 
     manager.registerSession({
       session_id: 'session-1',
+      device_udid: 'LIST-DEVICE-1',
+      bundle_id: 'com.list.app1',
+      templates: ['time'],
       trace_path: '/tmp/trace1.trace',
       pid: 1001,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     manager.registerSession({
       session_id: 'session-2',
+      device_udid: 'LIST-DEVICE-2',
+      bundle_id: 'com.list.app2',
+      templates: ['allocations'],
       trace_path: '/tmp/trace2.trace',
       pid: 1002,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     const sessions = manager.getAllSessions();
@@ -109,9 +133,13 @@ describe('TraceSessionManager', () => {
   test('removes session after stop', () => {
     manager.registerSession({
       session_id: 'remove-test',
+      device_udid: 'REMOVE-DEVICE',
+      bundle_id: 'com.remove.app',
+      templates: ['leaks'],
       trace_path: '/tmp/trace.trace',
       pid: 5555,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     expect(manager.getSession('remove-test')).toBeDefined();
@@ -139,9 +167,13 @@ describe('TraceSessionManager', () => {
   test('checks if session exists', () => {
     manager.registerSession({
       session_id: 'exists-test',
+      device_udid: 'EXISTS-DEVICE',
+      bundle_id: 'com.exists.app',
+      templates: ['time', 'allocations'],
       trace_path: '/tmp/trace.trace',
       pid: 7777,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     expect(manager.hasSession('exists-test')).toBe(true);
@@ -153,18 +185,26 @@ describe('TraceSessionManager', () => {
 
     manager.registerSession({
       session_id: 'count-1',
+      device_udid: 'COUNT-DEVICE-1',
+      bundle_id: 'com.count.app1',
+      templates: ['time'],
       trace_path: '/tmp/trace1.trace',
       pid: 1111,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     expect(manager.getSessionCount()).toBe(1);
 
     manager.registerSession({
       session_id: 'count-2',
+      device_udid: 'COUNT-DEVICE-2',
+      bundle_id: 'com.count.app2',
+      templates: ['allocations'],
       trace_path: '/tmp/trace2.trace',
       pid: 2222,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     expect(manager.getSessionCount()).toBe(2);
@@ -177,16 +217,24 @@ describe('TraceSessionManager', () => {
   test('clears all sessions', () => {
     manager.registerSession({
       session_id: 'clear-1',
+      device_udid: 'CLEAR-DEVICE-1',
+      bundle_id: 'com.clear.app1',
+      templates: ['leaks'],
       trace_path: '/tmp/trace1.trace',
       pid: 3333,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     manager.registerSession({
       session_id: 'clear-2',
+      device_udid: 'CLEAR-DEVICE-2',
+      bundle_id: 'com.clear.app2',
+      templates: ['time', 'allocations', 'leaks'],
       trace_path: '/tmp/trace2.trace',
       pid: 4444,
-      status: 'recording'
+      status: 'recording',
+      start_time: new Date()
     });
 
     expect(manager.getSessionCount()).toBe(2);

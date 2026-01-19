@@ -3,6 +3,11 @@
  */
 
 /**
+ * Valid Instruments template types
+ */
+export type TemplateType = 'time' | 'allocations' | 'leaks';
+
+/**
  * Template mapping from short names to full Instruments template names
  */
 const TEMPLATE_MAPPING: Record<string, string> = {
@@ -260,9 +265,15 @@ export function parseLeaksOutput(output: string): LeaksData {
  */
 export interface SessionInfo {
   session_id: string;
+  device_udid: string;
+  bundle_id: string;
+  templates: TemplateType[];
   trace_path: string;
   pid: number;
-  status: 'recording' | 'completed';
+  status: 'recording' | 'stopped' | 'failed';
+  start_time: Date;
+  end_time?: Date;
+  child_process?: any; // ChildProcess from execa, type as any to avoid import
 }
 
 /**
@@ -272,8 +283,7 @@ export interface StopResult {
   session_id: string;
   trace_path: string;
   duration_seconds: number;
-  file_size_mb: number;
-  status: 'completed';
+  status: 'stopped' | 'failed';
 }
 
 /**
