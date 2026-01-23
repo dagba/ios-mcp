@@ -99,7 +99,9 @@ Reference: [TCA documentation](https://github.com/pointfreeco/swift-composable-a
 
 **Use for:** Enterprise apps, multiple teams, maximum testability
 
-**Layers:** Domain (entities, use cases) → Data (repositories, network) → Presentation (ViewModels, Views)
+**Patterns:**
+- **VIP (View-Interactor-Presenter)**: Use `vip-clean-architecture` skill for unidirectional data flow, protocol-based boundaries, and Spy-pattern testing
+- **Generic Clean**: Domain (entities, use cases) → Data (repositories, network) → Presentation (ViewModels, Views)
 
 **Key:** Dependency inversion, protocol-based boundaries between layers
 

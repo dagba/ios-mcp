@@ -139,6 +139,38 @@ Implements modern SwiftUI glass effects:
 - Fallback UI patterns
 - Modifier ordering best practices
 
+### Architecture (3 skills)
+
+#### architecture-patterns
+**Source:** [Dimillian/Skills](https://github.com/Dimillian/Skills)  
+**Focus:** Architecture pattern selection (MVVM, TCA, Clean Architecture)
+
+Quick reference for choosing iOS architecture patterns:
+- Pattern selection decision tree
+- MVVM best practices with @Observable
+- TCA and Clean Architecture guidance
+- Protocol-based dependency injection
+
+#### vip-clean-architecture
+**Focus:** VIP (View-Interactor-Presenter) Clean Architecture
+
+Implements Uncle Bob's Clean Architecture with strict unidirectional data flow:
+- Three-component architecture (View, Interactor, Presenter)
+- Protocol-based boundaries for 100% testability
+- Spy pattern for testing protocol contracts
+- Request→Response→ViewModel data flow
+- Anti-patterns and migration guides
+
+#### viper-architecture-rambler
+**Source:** [Dimillian/Skills](https://github.com/Dimillian/Skills)  
+**Focus:** VIPER architecture with Rambler team patterns
+
+Five-component architecture for complex multi-feature apps:
+- VIPER (View-Interactor-Presenter-Entity-Router) implementation
+- Rambler ecosystem tools (Generamba, ViperMcFlurry)
+- Module-based communication patterns
+- TDD-friendly testing strategies
+
 ### macOS Packaging (1 skill)
 
 #### macos-spm-app-packaging
@@ -158,6 +190,7 @@ Complete macOS app packaging workflow without Xcode:
 | **Swift Concurrency** | `swift-concurrency-expert`, `swift-concurrency-avdlee` | Safe concurrent code, Swift 6 migration |
 | **iOS Development** | `ios-debugger-agent`, `app-store-changelog`, `gh-issue-fix-flow` | Debugging, releases, issue resolution |
 | **SwiftUI** | `swiftui-ui-patterns`, `swiftui-view-refactor`, `swiftui-performance-audit`, `swiftui-liquid-glass` | UI development, performance, modern APIs |
+| **Architecture** | `architecture-patterns`, `vip-clean-architecture`, `viper-architecture-rambler` | Pattern selection, Clean Architecture, testable code |
 | **Packaging** | `macos-spm-app-packaging` | macOS app distribution |
 
 ## Using Skills with This MCP Server
@@ -249,5 +282,5 @@ For issues or suggestions related to:
 
 ---
 
-**Last Updated:** 2026-01-18  
-**Skill Count:** 11 skills across 5 categories
+**Last Updated:** 2026-01-23  
+**Skill Count:** 12 skills across 5 categories

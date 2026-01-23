@@ -44,7 +44,4 @@ temp/
 # Documentation backup folder
 backup/
 
-# Claude instructions (local only)
 claude.md
-
-docs/
